@@ -1,47 +1,47 @@
 source 'https://rubygems.org'
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.0.0'
-
-# Use sqlite3 as the database for Active Record
+gem 'rails', '~> 5.1.1'
 gem 'sqlite3'
-
-# Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.0'
-
-# Use Uglifier as compressor for JavaScript assets
+gem 'puma', '~> 3.7'
+gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
+gem 'coffee-rails', '~> 4.2'
+gem 'turbolinks', '~> 5'
+gem 'jbuilder', '~> 2.5'
 
-# Use CoffeeScript for .js.coffee assets and views
-gem 'coffee-rails', '~> 4.0.0'
-
-# See https://github.com/sstephenson/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
-
-# Use jquery as the JavaScript library
-gem 'jquery-rails'
-
-# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
-
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 1.2'
-
-group :doc do
-  # bundle exec rake doc:rails generates the API under doc/api.
-  gem 'sdoc', require: false
+group :development, :test do
+  gem 'rspec-rails', '~> 3.8.0'
+  gem 'factory_bot_rails', '~> 4.10.0'
+  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
 
-# Use ActiveModel has_secure_password
-gem 'bcrypt-ruby', '~> 3.0.0'
+group :development do
+  gem 'web-console', '>= 3.3.0'
+  gem 'listen', '>= 3.0.5', '< 3.2'
+  gem 'spring'
+  gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'faker', require: false # for sample data in development
+  gem 'spring-commands-rspec'
+end
 
-# Use unicorn as the app server
-# gem 'unicorn'
+group :test do
+  gem 'capybara', '~> 2.15.4'
+  gem 'selenium-webdriver'
+  gem 'chromedriver-helper'
+  # Or use poltergeist and PhantomJS as an alternative to Selenium/Chrome
+  # gem 'poltergeist', '~> 1.15.0'
+  gem 'launchy', '~> 2.4.3'
+  gem 'shoulda-matchers',
+    git: 'https://github.com/thoughtbot/shoulda-matchers.git',
+    branch: 'rails-5'
+  gem 'vcr'
+  gem 'webmock'
+end
 
-# Use Capistrano for deployment
-# gem 'capistrano', group: :development
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-# Use debugger
-# gem 'debugger', group: [:development, :test]
-
-gem "twitter-bootstrap-rails", "~> 2.2.8"
+gem 'bootstrap-sass'
+gem 'jquery-rails'
+gem 'devise'
+gem 'paperclip'
+gem 'geocoder'
