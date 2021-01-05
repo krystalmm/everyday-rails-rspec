@@ -23,6 +23,7 @@ group :development do
   gem 'faker', require: false # for sample data in development
   gem 'spring-commands-rspec'
   gem 'bundle_outdated_formatter'
+  gem 'spring-commands-rspec'
 end
 
 group :test do
