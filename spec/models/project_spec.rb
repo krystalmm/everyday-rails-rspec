@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Project, type: :model do
 
   before do
-    @user = User.create(first_name: "joe", last_name: "tester", email: "joetester@example.com", password: "dottle-nouveau-pavilion-tights-furze")
+    @user = FactoryBot.create(:user)
   end
 
   # プロジェクト名があれば有効な状態であること
@@ -29,7 +29,7 @@ RSpec.describe Project, type: :model do
   # 二人のユーザーが同じ名前を使うことは許可すること
   it "allows two users to share a project name" do
     @user.projects.create(name: "Test Project")
-    other_user = User.create(first_name: "jane", last_name: "tester", email: "janetester@example.com", password: "dottle-nouveau-pavilion-tights-furze")
+    other_user = FactoryBot.create(:user)
     other_project = other_user.projects.build(name: "Test Project")
     expect(other_project).to be_valid
   end
@@ -53,6 +53,12 @@ RSpec.describe Project, type: :model do
       project = FactoryBot.create(:project, :due_tomorrow)
       expect(project).to_not be_late
     end
+  end
+
+  # たくさんのメモがついていること（コールバック）
+  it "can have many notes" do
+    project = FactoryBot.create(:project, :with_notes)
+    expect(project.notes.length).to eq 5
   end
 end
 

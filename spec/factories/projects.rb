@@ -6,6 +6,12 @@ FactoryBot.define do
     association :owner
 
     # トレイトを使う！
+
+    # メモ付きのプロジェクト
+    trait :with_notes do
+      after(:create) { |project| create_list(:note, 5, project: project) }
+    end
+
     # 締め切りが昨日
     trait :due_yesterday do
       due_on { 1.day.ago }

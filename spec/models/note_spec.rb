@@ -3,13 +3,13 @@ require 'rails_helper'
 RSpec.describe Note, type: :model do
 
   before do
-    @user = User.create(first_name: "joe", last_name: "tester", email: "joetester@example.com", password: "dottle-nouveau-pavilion-tights-furze")
-    @project = @user.projects.create(name: "Test Project")
+    @user = FactoryBot.create(:user)
+    @project = FactoryBot.create(:project)
   end
 
   # ユーザー、プロジェクト、メッセージがあれば有効な状態であること
   it "is valid with a user, project, and message" do
-    note = Note.new(message: "This is a sample note.", user: @user, project: @project)
+    note = FactoryBot.create(:note)
     expect(note).to be_valid
   end 
 
