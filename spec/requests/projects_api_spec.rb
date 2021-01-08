@@ -42,12 +42,17 @@ RSpec.describe "Projects API", type: :request do
 
     project_attributes = FactoryBot.attributes_for(:project, name: "updated project")
 
-    put "/api/projects/#{project.id}", params: { user_email: user.email, user_token: user.authentication_token, project: project_attributes  }
+    put "/api/projects/#{project.id}", params: { user_email: user.email, user_token: user.authentication_token, project: project_attributes }
+    project.reload
 
-    expect(response).to have_http_status(:success)
+    get api_project_path(project.id), params: { user_email: user.email, user_token: user.authentication_token }
     json = JSON.parse(response.body)
-    expect(project_attributes["name"]).to eq json["name"]
+    
+    expect(response).to have_http_status(:success)
+    expect(json["name"]).to eq("updated project")
   end
 end
+
+
 
 
