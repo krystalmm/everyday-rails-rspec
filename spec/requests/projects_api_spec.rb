@@ -18,6 +18,7 @@ RSpec.describe "Projects API", type: :request do
 
     expect(response).to have_http_status(:success)
     json = JSON.parse(response.body)
+
     expect(json["name"]).to eq "Second Sample Project"
   end
 
@@ -33,4 +34,20 @@ RSpec.describe "Projects API", type: :request do
 
     expect(response).to have_http_status(:success)
   end
+
+  # プロジェクトを更新できること
+  it "updates a project" do
+    user = FactoryBot.create(:user)
+    project = FactoryBot.create(:project, name: "Old project", owner: user)
+
+    project_attributes = FactoryBot.attributes_for(:project, name: "updated project")
+
+    put "/api/projects/#{project.id}", params: { user_email: user.email, user_token: user.authentication_token, project: project_attributes  }
+
+    expect(response).to have_http_status(:success)
+    json = JSON.parse(response.body)
+    expect(project_attributes["name"]).to eq json["name"]
+  end
 end
+
+
