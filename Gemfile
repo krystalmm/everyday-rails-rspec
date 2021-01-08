@@ -28,6 +28,7 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'launchy'
   gem 'selenium-webdriver'
   gem 'webdrivers'
   # Or use poltergeist and PhantomJS as an alternative to Selenium/Chrome
