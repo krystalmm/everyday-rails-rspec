@@ -66,4 +66,6 @@ RSpec.configure do |config|
 
   # コントローラスペックでDeviseのテストヘルパーを使用する
    config.include Devise::Test::ControllerHelpers, type: :controller
+  # Deviseのsign_inヘルパーをリクエストスペックに追加する
+   config.include RequestSpecHelper, type: :request
 end
