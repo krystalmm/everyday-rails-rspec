@@ -2,11 +2,9 @@ require 'rails_helper'
 
 RSpec.describe Note, type: :model do
 
-  before do
-    @user = FactoryBot.create(:user)
-    @project = FactoryBot.create(:project)
-  end
-
+    let(:user) { FactoryBot.create(:user) }
+    let(:project) { FactoryBot.create(:project, owner: user) }
+  
   # ユーザー、プロジェクト、メッセージがあれば有効な状態であること
   it "is valid with a user, project, and message" do
     note = FactoryBot.create(:note)
@@ -23,17 +21,15 @@ RSpec.describe Note, type: :model do
   # 文字列に一致するメッセージを検索する
   describe "search message for a term" do
 
-    before do
-      @note1 = @project.notes.create(message: "This is the first note.", user: @user)
-      @note2 = @project.notes.create(message: "This is the second note.", user: @user)
-      @note3 = @project.notes.create(message: "First, preheat the oven.", user: @user)
-    end
+      let!(:note1) { FactoryBot.create(:note, project: project, user: user, message: "This is the first note.") }
+      let!(:note2) { FactoryBot.create(:note, project: project, user: user, message: "This is the second note.") }
+      let!(:note3) { FactoryBot.create(:note, project: project, user: user, message: "First, preheat the oven.") }
 
     # 一致するデータが見つかるとき
     context "when a match is found" do
       # 検索文字列に一致するメモを返すこと
       it "returns notes that match the search term" do
-        expect(Note.search("first")).to include(@note1, @note3)
+        expect(Note.search("first")).to include(note1, note3)
       end
     end
 
