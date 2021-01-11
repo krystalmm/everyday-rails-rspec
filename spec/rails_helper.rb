@@ -68,4 +68,5 @@ RSpec.configure do |config|
    config.include Devise::Test::ControllerHelpers, type: :controller
   # Deviseのsign_inヘルパーをリクエストスペックに追加する
    config.include RequestSpecHelper, type: :request
+   config.include Devise::Test::IntegrationHelpers, type: :feature
 end
