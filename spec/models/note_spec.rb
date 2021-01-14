@@ -33,6 +33,9 @@ RSpec.describe Note, type: :model do
     expect(note.user_name).to eq "Fake User"
   end
 
+  # ファイルのアップロードができる
+  it { is_expected.to have_attached_file(:attachment) }
+
   # 文字列に一致するメッセージを検索する
   describe "search message for a term" do
 
