@@ -100,18 +100,14 @@ RSpec.describe ProjectsController, type: :controller do
 
         # ゲストとして
         context "as a guest" do
-            # 302レスポンスを返すこと
-            it "returns a 302 response" do
+            # 302レスポンスを返すこと,サインイン画面にリダイレクトすること
+            it "returns a 302 response and redirects to the sign-in page" do
                 project_params = FactoryBot.attributes_for(:project)
                 post :create, params: { project: project_params }
-                expect(response).to have_http_status "302"
-            end
-
-            # サインイン画面にリダイレクトすること
-            it "redirects to the sign-in page" do
-                project_params = FactoryBot.attributes_for(:project)
-                post :create, params: { project: project_params }
-                expect(response).to redirect_to "/users/sign_in"
+                aggregate_failures do
+                    expect(response).to have_http_status "302"
+                    expect(response).to redirect_to "/users/sign_in"
+                end
             end
         end
     end
@@ -141,20 +137,15 @@ RSpec.describe ProjectsController, type: :controller do
                 @project = FactoryBot.create(:project, owner: other_user, name: "Same Old Name")
             end 
 
-            # プロジェクトを更新できないこと
-            it "does not update the project" do
+            # プロジェクトを更新できないこと、ダッシュボードへリダイレクトすること
+            it "does not update the project and redirects to the dashboard" do
                 project_params = FactoryBot.attributes_for(:project, name: "New Name")
                 sign_in @user
                 patch :update, params: { id: @project.id, project: project_params }
-                expect(@project.reload.name).to eq "Same Old Name"
-            end
-
-            # ダッシュボードへリダイレクトすること
-            it "redirects to the dashboard" do
-                project_params = FactoryBot.attributes_for(:project)
-                sign_in @user
-                patch :update, params: { id: @project.id, project: project_params }
-                expect(response).to redirect_to root_path
+                aggregate_failures do
+                    expect(@project.reload.name).to eq "Same Old Name"
+                    expect(response).to redirect_to root_path
+                end
             end
         end
 

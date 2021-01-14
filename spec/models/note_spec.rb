@@ -12,11 +12,26 @@ RSpec.describe Note, type: :model do
   end 
 
   # メッセージがなければ無効な状態であること
-  it "is invalid without a message" do
-    note = Note.new(message: nil)
-    note.valid?
-    expect(note.errors[:message]).to include("can't be blank")
-  end 
+  # it "is invalid without a message" do
+  #   note = Note.new(message: nil)
+  #   note.valid?
+  #   expect(note.errors[:message]).to include("can't be blank")
+  # end
+  it { is_expected.to validate_presence_of :message }
+
+  # 名前の取得をメモを作成したユーザーに委譲すること
+  it "delegates name to the user who created it" do
+    # user = FactoryBot.create(:user, first_name: "Fake", last_name: "User")
+    # note = Note.new(user: user)
+    # expect(note.user_name).to eq "Fake User"
+    # 上記テストは永続化したユーザーオブジェクトを使っているので、データベースにアクセスする時間がかかってしまう。
+    # ここでは、モックを使ってデータベースにアクセスする処理を減らしている！！
+    user = instance_double("User", name: "Fake User")
+    note = Note.new
+    # スタブを使っている！テストランナーに対して、このテスト内のどこかでnote.userを呼び出すことを伝えている！
+    allow(note).to receive(:user).and_return(user)
+    expect(note.user_name).to eq "Fake User"
+  end
 
   # 文字列に一致するメッセージを検索する
   describe "search message for a term" do

@@ -10,16 +10,19 @@ RSpec.describe Task, type: :model do
   end
 
   # プロジェクトがなければ無効な状態であること
-  it "is invalid without a project" do
-    task = Task.new(project: nil)
-    task.valid?
-    expect(task.errors[:project]).to include("must exist")
-  end
+  # it "is invalid without a project" do
+  #   task = Task.new(project: nil)
+  #   task.valid?
+  #   expect(task.errors[:project]).to include("must exist")
+  # end
+  it { is_expected.to validate_presence_of :project }
 
   # 名前がなければ無効な状態であること
-  it "is invalid without a name" do
-    task = Task.new(name: nil)
-    task.valid?
-    expect(task.errors[:name]).to include("can't be blank")
-  end
+  # it "is invalid without a name" do
+  #   task = Task.new(name: nil)
+  #   task.valid?
+  #   expect(task.errors[:name]).to include("can't be blank")
+  # end
+  it { is_expected.to validate_presence_of :name }
 end
+
