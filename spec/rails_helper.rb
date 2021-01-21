@@ -70,8 +70,8 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :controller
   # Deviseのsign_inヘルパーをリクエストスペックに追加する
   config.include RequestSpecHelper, type: :request
-  config.include Devise::Test::IntegrationHelpers, type: :feature
-  
+  config.include Devise::Test::IntegrationHelpers, type: :system
+
   # テストスイートの実行が終わったらアップロードされたファイルを削除する
   config.after(:suite) do
     FileUtils.rm_rf(Dir["#{Rails.root}/spec/test_uploads/"])
